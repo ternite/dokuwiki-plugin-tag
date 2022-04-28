@@ -77,7 +77,7 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
         if ($my = $this->loadHelper('tag')) $pages = $my->getTopic($ns, '', $tag);
         if (!isset($pages) || !$pages) return true; // nothing to display
 
-        if ($mode == 'xhtml') {
+        if ($mode == 'xhtml' || $mode == 'odt') {
             /* @var Doku_Renderer_xhtml $renderer */
 
             // prevent caching to ensure content is always fresh
@@ -98,7 +98,7 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
            	}     
 
             $pagelist->setFlags($flags);
-            $pagelist->startList();
+            $pagelist->startList($mode,$renderer);
 
             // Sort pages by pagename if required by flags
             if($pagelist->sort || $pagelist->rsort) {
@@ -110,10 +110,16 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
             }
 
             foreach ($pages as $page) {
-                $pagelist->addPage($page);
+                $pagelist->addPage($page,$mode,$renderer);
             }
-            $renderer->doc .= $pagelist->finishList();      
-            return true;
+			
+			if ($mode == 'xhtml') {
+				$renderer->doc .= $pagelist->finishList($mode,$renderer);      
+				return true;
+			} else if ($mode == 'odt') {
+				$renderer->doc .= $pagelist->finishList($mode,$renderer);      
+				return true;
+			}
 
         // for metadata renderer
 /*        } elseif ($mode == 'metadata') {
