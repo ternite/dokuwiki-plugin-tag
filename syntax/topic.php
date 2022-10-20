@@ -125,7 +125,7 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
            	}
 
             $pagelist->setFlags($flags);
-            $pagelist->startList($mode,$renderer);
+            $pagelist->startList(null,$mode,$renderer);
 
             // Sort pages by pagename if required by flags
             if($pagelist->sort || $pagelist->rsort) {
