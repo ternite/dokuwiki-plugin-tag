@@ -49,13 +49,13 @@ class syntax_plugin_tag_tagpage extends DokuWiki_Syntax_Plugin {
      * @return array Data for the renderer
      */
     function handle($match, $state, $pos, Doku_Handler $handler) {
-        $params            = array();
-        $dump              = trim(substr($match, 10, -2)); // get given tag
-        $dump              = explode('|', $dump, 2); // split to tags, link name and options
-        $params['title']   = $dump[1];
-        $dump              = explode('&', $dump[0]);
-        $params['dynamic'] = ($dump[1] == 'dynamic');
-        $params['tag']     = trim($dump[0]);
+        $params = [];
+        $match = trim(substr($match, 10, -2)); // get given tag
+        $match = array_pad(explode('|', $match, 2), 2, ''); // split to tags, link name and options
+        $params['title'] = $match[1];
+        [$tag, $flag] = array_pad(explode('&', $match[0], 2), 2, '');
+        $params['dynamic'] = ($flag == 'dynamic');
+        $params['tag'] = trim($tag);
 
         return $params;
     }
@@ -63,28 +63,29 @@ class syntax_plugin_tag_tagpage extends DokuWiki_Syntax_Plugin {
     /**
      * Render xhtml output
      *
-     * @param string         $mode      Renderer mode (supported modes: xhtml)
+     * @param string         $format      Renderer mode (supported modes: xhtml)
      * @param Doku_Renderer  $renderer  The renderer
      * @param array          $data      The data from the handler function
      * @return bool If rendering was successful.
      */
-    function render($mode, Doku_Renderer $renderer, $data) {
-        if($data == false) return false;
+    function render($format, Doku_Renderer $renderer, $data) {
+        if($data['tag'] === '') return false;
 
-        if($mode == "xhtml") {
+        if($format == "xhtml") {
             if($data['dynamic']) {
                 // deactivate (renderer) cache as long as there is no proper cache handling
                 // implemented for the count syntax
                 $renderer->nocache();
             }
 
-            /** @var helper_plugin_tag $my */
-            if(!($my = $this->loadHelper('tag'))) return false;
+            /** @var helper_plugin_tag $helper */
+            if(!$helper = $this->loadHelper('tag')) {
+                return false;
+            }
 
-            $renderer->doc .= $my->tagLink($data['tag'], $data['title'], $data['dynamic']);
+            $renderer->doc .= $helper->tagLink($data['tag'], $data['title'], $data['dynamic']);
             return true;
         }
         return false;
     }
 }
-// vim:ts=4:sw=4:et: 
