@@ -15,6 +15,7 @@ $lang['topic']			= 'Topic';
 $lang['count']			= 'Quantity';
 $lang['toolbar_icon']	= 'Insert Tag-Syntax';
 $lang['empty_output']	= 'Empty Output';
+$lang['topic_output_when_none'] = 'None.';
 
 // search form of tagsearch syntax
 $lang['include']		= 'Include';

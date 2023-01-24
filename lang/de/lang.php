@@ -15,6 +15,7 @@ $lang['topic']			= 'Thema';
 $lang['count']			= 'Menge';
 $lang['toolbar_icon']	= 'Tag-Syntax einfügen';
 $lang['empty_output']	= 'Leere Ausgabe';
+$lang['topic_output_when_none'] = 'Keine.';
 
 $lang['include']		= 'Einschließen';
 $lang['exclude']		= 'Ausschließen';

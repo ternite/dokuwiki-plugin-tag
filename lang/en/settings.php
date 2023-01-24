@@ -30,3 +30,5 @@ $lang['list_tags_of_subns']		= 'List also tags in subnamespaces of a specified n
 $lang['tags_list_css']			= 'Choose style applied to pages\' tags list';
 $lang['tags_list_css_o_tags']	= 'default style';
 $lang['tags_list_css_o_tagstop'] = 'optimized for tags list at top of page';
+
+$lang['topic_show_output_when_empty'] = 'In topic mode: in case no page with the given tags could be found, should a text indicate that nothing was found?';

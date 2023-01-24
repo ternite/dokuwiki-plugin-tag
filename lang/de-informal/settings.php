@@ -28,3 +28,5 @@ $lang['list_tags_of_subns']		= 'Tags anzeigen, die in Subnamespaces von angegebe
 $lang['tags_list_css']			= 'Wähle ein Aussehen für die Tag-Liste auf der Seite';
 $lang['tags_list_css_o_tags']	= 'Standardaussehen';
 $lang['tags_list_css_o_tagstop'] = 'Optimierte Tag-Liste für Seitenkopf';
+
+$lang['topic_show_output_when_empty'] = 'Im topic-Befehl: falls keine Seiten mit den angegebenen Tags gefunden wurden, soll ein Text ausgegeben werden, der dies anzeigt?';

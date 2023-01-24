@@ -100,7 +100,14 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
             $pages = $helper->getTopic($ns, '', $tag);
         }
 
-        if (!isset($pages) || !$pages) return true; // nothing to display
+        if (!isset($pages) || !$pages) { // nothing to display
+            
+            if ($this->getConf('topic_show_output_when_empty')) {
+                $renderer->doc .= "<p>".$this->getLang('topic_output_when_none')."</p>";
+            }
+            
+            return true;
+        }
 
         if ($format == 'xhtml' || $format == 'odt') {
             /* @var Doku_Renderer_xhtml $renderer */
