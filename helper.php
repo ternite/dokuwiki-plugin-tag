@@ -547,21 +547,34 @@ class helper_plugin_tag extends DokuWiki_Plugin {
      * @return string
      */
     protected function replacePlaceholders($tag) {
-        global $INFO, $INPUT;
+        global $USERINFO, $INPUT;
 
         $user = $INPUT->server->str('REMOTE_USER');
 
         //only available for logged-in users
-        if(isset($INFO['userinfo']['grps'])) {
-            $group = $INFO['userinfo']['grps'][0];
-        }   else {
+        if(isset($USERINFO)) {
+            if(is_array($USERINFO) && isset($USERINFO['name'])) {
+                $name  = cleanID($USERINFO['name']);
+            }
+            else {
+                $name = '';
+            }
+            // FIXME or delete, is unreliable because just first entry of group array is used, regardless the order of groups..
+            if(is_array($USERINFO) && is_array($USERINFO['grps']) && isset($USERINFO['grps'][0])) {
+                $group = cleanID($USERINFO['grps'][0]);
+            }
+            else {
+                $group = '';
+            }
+        } else {
+            $name  = '';
             $group = '';
         }
 
         $replace = [
                 '@USER@'  => cleanID($user),
-                '@NAME@'  => cleanID($INFO['userinfo']['name'] ?? ''),
-                '@GROUP@' => cleanID($group), //FIXME or delete, is unreliable because just first entry of group array is used, regardless the order of groups..
+                '@NAME@'  => $name,
+                '@GROUP@' => $group,
                 '@YEAR@'  => date('Y'),
                 '@MONTH@' => date('m'),
                 '@DAY@'   => date('d'),
