@@ -132,7 +132,7 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
            	}
 
             $pagelist->setFlags($flags);
-            $pagelist->startList(null,$format,$renderer);
+            $pagelist->startList(null,$format);
 
             // Sort pages by pagename if required by flags
             if($pagelist->sort || $pagelist->rsort) {
@@ -147,9 +147,9 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
             }
 
             foreach ($pages as $page) {
-                $pagelist->addPage($page,$format,$renderer);
+                $pagelist->addPage($page,$format);
             }
-            $renderer->doc .= $pagelist->finishList($format,$renderer);
+            $renderer->doc .= $pagelist->finishList($format);
             return true;
         }
         return false;
